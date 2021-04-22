@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>userPath</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <div class="dx-fieldset">
+      <div class="dx-fieldset-header">Simple lookup</div>
+      <div class="dx-field">
+        <dx-lookup
+          [items]="data"
+          [value]="data[0]"
+          (onValueChanged)="from($event)"
+        >
+          <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
+        </dx-lookup>
+      </div>
+    </div>
+  </ion-card>
+  <ion-card>
+    <div class="dx-fieldset">
+      <div class="dx-fieldset-header">Simple lookup</div>
+      <div class="dx-field">
+        <dx-lookup
+          [items]="data"
+          [value]="data[1]"
+          (onValueChanged)="to($event)"
+        >
+          <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
+        </dx-lookup>
+      </div>
+    </div>
+  </ion-card>
+
+  <dx-button text="Click me" (onClick) = "userTrip()"> </dx-button>
+</ion-content>

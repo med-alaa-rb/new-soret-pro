@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>tripType</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="0">
+      <ion-card>
+        <ion-label>urbain</ion-label>
+      </ion-card>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-card>
+        <ion-label>inter urbain</ion-label>
+      </ion-card>
+    </ion-segment-button>
+  </ion-segment>
+</ion-content>
