@@ -22,6 +22,7 @@ var createList = (arr) => {
 
 fsRoutes.get("/data/api/2020/routes/:id", (req, res) => {
   var id = req.params.id;
+  console.log(id)
   trips = [];
   fs.readFile(detailTrip, async (error, data) => {
     if (error) {

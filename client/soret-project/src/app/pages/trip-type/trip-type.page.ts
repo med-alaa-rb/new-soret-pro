@@ -15,7 +15,7 @@ export class TripTypePage {
   ) {}
 
   async segmentChanged(ev: any) {
-    this._http.path.tripType = JSON.parse(ev.detail.value);
+    this._http.tripType = JSON.parse(ev.detail.value);
      this.modalController.dismiss();
     const modal = await this.modalController.create({
       component: UserPathPage,

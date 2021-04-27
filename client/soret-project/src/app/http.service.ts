@@ -5,7 +5,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class HttpService {
-  path: any = {};
+  tripType: number;
+  tripId: any = [];
 
   constructor(private http: HttpClient) {}
   ROOT_URL = 'http://192.168.43.52:2700';

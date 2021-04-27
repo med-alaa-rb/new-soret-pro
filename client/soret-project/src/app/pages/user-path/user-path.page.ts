@@ -10,6 +10,7 @@ import { MapTrajectPage } from '../map-traject/map-traject.page';
 })
 export class UserPathPage implements OnInit {
   data: any = [];
+  path: any = {};
 
   constructor(
     public _http: HttpService,
@@ -17,22 +18,27 @@ export class UserPathPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    await this._http.splitData(this._http.path.tripType).subscribe((res) => {
+    await this._http.splitData(this._http.tripType).subscribe((res) => {
       console.log(res);
       this.data = res;
     });
   }
 
   from(el) {
-    this._http.path['from'] = el.value;
+    this.path['from'] = el.value;
   }
 
   to(el) {
-    this._http.path['to'] = el.value;
+    this.path['to'] = el.value;
   }
 
   async userTrip() {
-    console.log(this._http.path);
+    this.path.tripType = this._http.tripType
+    console.log(this.path)
+    this._http.searchTraject(this.path).subscribe(async (res) => {
+      this._http.tripId = await res;
+      console.log(this._http.tripId);
+    });
     const modal = await this.modalController.create({
       component: MapTrajectPage,
       cssClass: 'my-custom-class',

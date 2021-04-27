@@ -6,8 +6,12 @@ let trips = [];
 //function to compare two object
 
 let compareObj = (arr1, arr2, i, j) => {
-  if (Object.values(arr1[i]).join("") == Object.values(arr2[j]).join("")) {
-    return Object.keys(arr1[i]).join("");
+  if (arr1.length) {
+    return null;
+  } else if (
+    Object.values(arr1[i]).join("") == Object.values(arr2[j]).join("")
+  ) {
+    return Object.keys(arr1[i]);
   } else if (j == arr2.length - 1 && i == arr1.length - 1) {
     return null;
   } else if (j == arr2.length - 1) {
@@ -17,6 +21,30 @@ let compareObj = (arr1, arr2, i, j) => {
   }
 };
 
+//search additional stops if compare return null
+
+let searchAlter = (arr1, arr2, obj) => {
+  console.log("obj", obj);
+  var arr = [arr1, arr2].flat();
+  var arr1 = [];
+  var result = [];
+  for (var i = 0; i < arr.length; i++) {
+    arr1.push(Object.values(arr[i])[0].split("-"));
+  }
+  arr1 = arr1.flat();
+  for (var i = 0; i < arr1.length; i++) {
+    console.log(obj.from == arr1[i]);
+    console.log(obj.from, arr1[i]);
+    if ([obj["to"], obj["from"]].indexOf(arr1[i]) === -1) {
+      if (result.indexOf(arr1[i]) === -1) {
+        result.push(arr1[i]);
+        console.log("pushed", arr1[i]);
+      }
+    }
+  }
+  return [(obj.from, result[0])];
+};
+
 traject.post("/data/api/2020/UserTraject", async (req, res) => {
   console.log(req.body);
   var object = req.body;
@@ -24,7 +52,6 @@ traject.post("/data/api/2020/UserTraject", async (req, res) => {
   trips = [];
   //create a JSON arr from trip.txt
   fs.readFile(detailTrip, async (error, data) => {
-    var resultFounded = false;
     if (error) {
       throw error;
     }
@@ -49,28 +76,34 @@ traject.post("/data/api/2020/UserTraject", async (req, res) => {
         choice.push(el);
       }
     });
-    let simpleArr = [];
 
-    console.log(choice.length - 1);
     // create an array of trip_id and trip_headsign [{trip_id: trip_headsign}] and push the element that include user start postion
-    var filterChoiceRes = [];
+
+    var filterRes = [];
+
     let filterChoice = (arr, i, str) => {
-      if (i == arr.length) {
-        return filterChoiceRes;
+      if (i == arr.length - 1) {
+        return filterRes;
       } else if (arr[i]["trip_headsign"].includes(str)) {
         var obj = {};
         obj[arr[i]["trip_id"]] = arr[i]["trip_headsign"];
-        filterChoiceRes.push(obj);
+        filterRes.push(obj);
         return filterChoice(arr, ++i, str);
       } else {
         return filterChoice(arr, ++i, str);
       }
     };
-    let filtredChoiceArr = filterChoice(choice, 0, object.from);
-    let filChoiceArr = filterChoice(choice, 0, object.to);
-    var compare = compareObj(filtredChoiceArr, filChoiceArr, 0, 0);
-    console.log(compare);
-    res.send([filtredChoiceArr, filChoiceArr]);
+
+    var filtredChoiceArr = await filterChoice(choice, 0, object.from);
+    filterRes = [];
+    var filChoiceArr = await filterChoice(choice, 0, object.to);
+    var compare = await compareObj(filtredChoiceArr, filChoiceArr, 0, 0);
+    console.log("compare", compare);
+    var x = searchAlter(filtredChoiceArr, filChoiceArr, object);
+    console.log("searchAlter", x);
+
+    // compare ? res.send(compare) : res.send([]);
+    res.send(x);
   });
 });
 

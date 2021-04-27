@@ -14,8 +14,6 @@ export class MapTrajectPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this._http.searchTraject(this._http.path).subscribe(async (res) => {
-      console.log(res);
-    });
+    
   }
 }
