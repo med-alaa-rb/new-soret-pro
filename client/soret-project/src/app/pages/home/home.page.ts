@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { HttpService } from '../../http.service';
-import { TripTypePage } from '../trip-type/trip-type.page';
+import { ComfirmPosPage } from '../comfirm-pos/comfirm-pos.page';
+
 
 @Component({
   selector: 'app-home',
@@ -14,18 +15,20 @@ export class HomePage implements OnInit {
 
   constructor(
     public modalController: ModalController,
-    public _http: HttpService
+    public _http: HttpService,
   ) {}
 
   async ngOnInit() {
     this.arrPictures = this._http.picArr()['__zone_symbol__value'];
     this.pic = await this.welcomePic(this.arrPictures);
+    await this._http.locate(null);
     this.makeText();
   }
 
   async getStarted() {
+    this.modalController.dismiss();
     const modal = await this.modalController.create({
-      component: TripTypePage,
+      component: ComfirmPosPage,
       cssClass: 'my-custom-class',
     });
 

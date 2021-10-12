@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true">
+  <ion-card style="background-color: LightGrey; margin: 5px">
+    <ion-title class="ion-text-center" style="font-size: 28px">
+      Stop Detail
+    </ion-title>
+
+    <ion-card-content *ngFor="let el of data">
+      <ion-card style="border: 1px solid tomato; margin: 2%">
+        <ion-item>
+          <h3>
+            trip : <strong>{{ el.trip_headsign }}</strong>
+          </h3>
+        </ion-item>
+        <ion-item>
+          <span *ngIf="el.direction == 1; else cndFalse"
+            >Direction : aller
+          </span>
+          <ng-template #cndFalse>Direction : retour </ng-template>
+        </ion-item>
+        <ion-item>
+          <h3>
+            arrival time : <strong>{{ el.arrival_time }}</strong>
+          </h3>
+        </ion-item>
+
+        <div style="text-align: center">
+          <h3 style="text-align: center">
+            <ion-icon
+              #icon
+              name="notifications-off"
+              size="large"
+              (click)="lclNotification(icon, el.arrival_time)"
+            ></ion-icon>
+          </h3>
+        </div>
+
+        <!-- <ion-item>
+        <ion-button (click)="showAll(el.shape_id)"> show all trip </ion-button>
+      </ion-item> -->
+      </ion-card>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

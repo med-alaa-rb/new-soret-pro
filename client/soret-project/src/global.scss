@@ -24,7 +24,4 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-
-/*import dx.common.css and a predefined theme stylesheet */
-@import '~devextreme/dist/css/dx.common.css';
-@import '~devextreme/dist/css/dx.light.css';
+@import "~leaflet/dist/leaflet.css"

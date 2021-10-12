@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center" style="font-size: 28px">
+      search your destination
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar
+    showCancelButton
+    animated
+    cancel-button-icon
+    #search
+    (ionChange)="searchStops(search.value)"
+    placeholder="...Search"
+  ></ion-searchbar>
+  <div>
+    <ion-list>
+      <ion-item
+        style="margin: 30px; margin-top: 10px"
+        *ngFor="let element of searchList; let i = index"
+      >
+        <ion-label>
+          <h2 id="el{{i}}">
+            <strong>{{element.stop_name}}</strong>
+          </h2>
+        </ion-label>
+        <ion-badge
+          style="margin-right: 10px; background-color: white; color: tomato"
+          (click)="getCoords(element)"
+          >info</ion-badge
+        >
+        <ion-badge style="background-color: white; color: tomato">
+          <ion-icon
+            #icon
+            name="star-outline"
+            (click)="addToFav(element, icon)"
+          ></ion-icon>
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

@@ -3,32 +3,31 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+  },
+  {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: 'comfirm-pos',
+    loadChildren: () => import('./pages/comfirm-pos/comfirm-pos.module').then( m => m.ComfirmPosPageModule)
   },
   {
-    path: 'trip-type',
-    loadChildren: () => import('./pages/trip-type/trip-type.module').then( m => m.TripTypePageModule)
+    path: 'trip-info',
+    loadChildren: () => import('./pages/trip-info/trip-info.module').then( m => m.TripInfoPageModule)
   },
   {
-    path: 'user-path',
-    loadChildren: () => import('./pages/user-path/user-path.module').then( m => m.UserPathPageModule)
-  },
-  {
-    path: 'map-traject',
-    loadChildren: () => import('./pages/map-traject/map-traject.module').then( m => m.MapTrajectPageModule)
-  },
-];
+    path: 'all-trip',
+    loadChildren: () => import('./pages/all-trip/all-trip.module').then( m => m.AllTripPageModule)
+  }
 
+];
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
